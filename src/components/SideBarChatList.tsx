@@ -38,8 +38,6 @@ const SideBarChatList = ({ friends, sessionId }: SideBarChatListProps) => {
         `/dashboard/chat/${chatHrefConstructor(sessionId, message.senderId)}`
 
       if (!shouldNotify) return
-      console.log(shouldNotify)
-      // should be notified
       toast.custom((t) => (
         // custom component
         <UnseenChatToast
@@ -60,6 +58,9 @@ const SideBarChatList = ({ friends, sessionId }: SideBarChatListProps) => {
     return () => {
       pusherClient.unsubscribe(toPusherKey(`user:${sessionId}:chats`))
       pusherClient.unsubscribe(toPusherKey(`user:${sessionId}:friends`))
+
+      pusherClient.unbind('new_message', chatHandler)
+      pusherClient.unbind('new_friend', newFriendHandler)
     }
   }, [pathname, sessionId, router])
 

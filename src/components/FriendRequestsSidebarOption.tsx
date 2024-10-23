@@ -35,6 +35,7 @@ const FriendRequestsSidebarOption = ({
 
     pusherClient.bind('incoming_friend_requests', friendRequestHandler)
     pusherClient.bind('new_friend', addedFriendHandler)
+
     return () => {
       pusherClient.unsubscribe(
         toPusherKey(`user:${sessionId}:incoming_friend_requests`)
